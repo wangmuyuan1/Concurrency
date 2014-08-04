@@ -3,12 +3,13 @@ package com.mw.concurrency;
 import java.util.concurrent.ForkJoinPool;
 import java.util.concurrent.RecursiveAction;
 
-public class ForkJoinTest extends RecursiveAction {
+// Can also use RecursiveTask here.
+public class ForkJoinRecursiveActionTest extends RecursiveAction {
 	
 	private int start;
 	private int end;
 	
-	public ForkJoinTest(int start, int end) {
+	public ForkJoinRecursiveActionTest(int start, int end) {
 		this.start = start;
 		this.end = end;
 	}
@@ -23,13 +24,13 @@ public class ForkJoinTest extends RecursiveAction {
 		
 		int mid = (start + end) / 2;
 		System.out.println("Splitted into start = " + start + " mid = " + mid + " end = " + end);
-		invokeAll(new ForkJoinTest(start, mid), new ForkJoinTest(mid + 1, end));
+		invokeAll(new ForkJoinRecursiveActionTest(start, mid), new ForkJoinRecursiveActionTest(mid + 1, end));
 	}
 
 	
 	public static void main(String[] args) {
-		ForkJoinTest test = new ForkJoinTest(1, 10);
+		ForkJoinRecursiveActionTest task = new ForkJoinRecursiveActionTest(1, 10);
 		ForkJoinPool pool = new ForkJoinPool();
-		pool.invoke(test);
+		pool.invoke(task);
 	}
 }
