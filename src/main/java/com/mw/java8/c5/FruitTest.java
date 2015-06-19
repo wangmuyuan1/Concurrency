@@ -8,7 +8,7 @@ import java.util.stream.IntStream;
 
 import static java.util.stream.Collectors.toList;
 
-public class ComparatorTest
+public class FruitTest
 {
     public static void main(String[] args)
     {

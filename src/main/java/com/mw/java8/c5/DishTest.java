@@ -11,11 +11,13 @@ import static java.util.Comparator.comparing;
 import static java.util.stream.Collectors.joining;
 import static java.util.stream.Collectors.toList;
 
-public class CaloriesTest
+public class DishTest
 {
+    private static List<Dish> dish = createDishList();
+
     public static void main(String[] args)
     {
-        reducing();
+        getSumOfCalAllDishes();
     }
 
     private static void filter()
@@ -102,6 +104,17 @@ public class CaloriesTest
 
         OptionalInt totalCal1 = createDishList().stream().mapToInt(Dish::getCalories).reduce(Integer::sum);
         System.out.println(totalCal1.getAsInt());
+    }
+
+    private static void getSumOfCalAllDishes()
+    {
+        System.out.println(dish.stream().mapToInt(Dish::getCalories).sum());
+    }
+
+    private static void getMaxCalAllDishes()
+    {
+        OptionalInt maxCal = dish.stream().mapToInt(Dish::getCalories).max();
+        System.out.println(maxCal.orElse(1));
     }
 
     private static List<Dish> createDishList()
