@@ -1,7 +1,7 @@
 package com.mw.java8.c5;
 
-import com.mw.java8.entity.Trader;
-import com.mw.java8.entity.Transaction;
+import com.mw.java8.c5.entity.Trader;
+import com.mw.java8.c5.entity.Transaction;
 
 import java.util.Arrays;
 import java.util.List;

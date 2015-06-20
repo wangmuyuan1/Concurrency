@@ -1,6 +1,6 @@
 package com.mw.java8.c5;
 
-import com.mw.java8.entity.Apple;
+import com.mw.java8.c5.entity.Apple;
 
 import java.util.List;
 import java.util.Random;

@@ -1,6 +1,6 @@
 package com.mw.java8.c5;
 
-import com.mw.java8.entity.Dish;
+import com.mw.java8.c5.entity.Dish;
 
 import java.util.Arrays;
 import java.util.List;

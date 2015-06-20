@@ -1,4 +1,4 @@
-package com.mw.java8.entity;
+package com.mw.java8.c5.entity;
 
 public class Apple
 {
