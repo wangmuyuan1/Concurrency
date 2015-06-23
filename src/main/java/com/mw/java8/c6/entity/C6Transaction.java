@@ -35,6 +35,11 @@ public class C6Transaction
         return currency;
     }
 
+    public boolean isDollar()
+    {
+        return this.currency == C6Currency.DOLLAR;
+    }
+
     @Override
     public String toString()
     {
@@ -89,4 +94,6 @@ public class C6Transaction
         result = 31 * result + (currency != null ? currency.hashCode() : 0);
         return result;
     }
+
+
 }

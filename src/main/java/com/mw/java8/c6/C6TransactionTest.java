@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 import static java.util.stream.Collectors.groupingBy;
+import static java.util.stream.Collectors.partitioningBy;
 
 public class C6TransactionTest
 {
@@ -27,12 +28,18 @@ public class C6TransactionTest
 
     public static void main(String[] args)
     {
-        groupTransactionByCurrency();
+        withPartitioner();
     }
 
     public static void groupTransactionByCurrency()
     {
         Map<C6Currency, List<C6Transaction>> result = transactions.stream().collect(groupingBy(C6Transaction::getCurrency));
         result.forEach((k, v) -> System.out.println("Key: " + k + ", Value: " + v));
+    }
+
+    public static void withPartitioner()
+    {
+        Map<Boolean, List<C6Transaction>> result = transactions.stream().collect(partitioningBy(t -> t.getValue() > 700));
+        result.forEach((k, v) -> System.out.println(k + ", " + v));
     }
 }
