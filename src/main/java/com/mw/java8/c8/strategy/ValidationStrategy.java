@@ -1,4 +1,4 @@
-package com.mw.java8.c8;
+package com.mw.java8.c8.strategy;
 
 public interface ValidationStrategy
 {

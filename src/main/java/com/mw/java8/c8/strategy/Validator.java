@@ -1,4 +1,4 @@
-package com.mw.java8.c8;
+package com.mw.java8.c8.strategy;
 
 public class Validator
 {
@@ -17,6 +17,9 @@ public class Validator
     public static void main(String[] args)
     {
         Validator numericValidator = new Validator((s) -> s.matches("\\d+"));
-        boolean b = numericValidator.validate("aaa");
+        System.out.println(numericValidator.validate("aaa"));
+
+        Validator lowerCaseValidator = new Validator((s) -> s.matches("[a-z]+"));
+        System.out.println(lowerCaseValidator.validate("aaa"));
     }
 }
