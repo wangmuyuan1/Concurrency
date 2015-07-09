@@ -1,10 +1,10 @@
 package com.mw.java8.c9;
 
-public class Child extends ClassB implements InterfaceA
+public class Child2 implements InterfaceB, InterfaceC
 {
     public static void main(String[] args)
     {
-        Child c = new Child();
+        Child2 c = new Child2();
         System.out.println(c.say());
     }
 }
