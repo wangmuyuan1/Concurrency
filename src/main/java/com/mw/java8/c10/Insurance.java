@@ -4,15 +4,18 @@ public class Insurance
 {
     private Person person;
     private Car car;
+    private String name;
+
+    public Insurance(Person person, Car car, String name)
+    {
+        this.person = person;
+        this.car = car;
+        this.name = name;
+    }
 
     public Person getPerson()
     {
         return person;
-    }
-
-    public void setPerson(Person person)
-    {
-        this.person = person;
     }
 
     public Car getCar()
@@ -20,8 +23,8 @@ public class Insurance
         return car;
     }
 
-    public void setCar(Car car)
+    public String getName()
     {
-        this.car = car;
+        return name;
     }
 }
