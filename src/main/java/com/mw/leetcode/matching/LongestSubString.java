@@ -1,4 +1,4 @@
-package com.mw.leetcode;
+package com.mw.leetcode.matching;
 
 public class LongestSubString
 {
