@@ -1,6 +1,6 @@
-package com.mw.leetcode.sorting;
+package com.mw.leetcode.p1to10;
 
-public class MedianOfTwoSortedArrays
+public class MedianOfTwoSortedArrays4
 {
     public static double findMedianSortedArrays(int[] nums1, int[] nums2)
     {

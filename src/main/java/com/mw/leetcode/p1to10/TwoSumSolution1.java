@@ -1,9 +1,9 @@
-package com.mw.leetcode.sum;
+package com.mw.leetcode.p1to10;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class TwoSumSolution
+public class TwoSumSolution1
 {
     /**
      * Space complexity 0

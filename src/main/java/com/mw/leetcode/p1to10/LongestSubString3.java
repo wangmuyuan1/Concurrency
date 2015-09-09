@@ -1,6 +1,6 @@
-package com.mw.leetcode.matching;
+package com.mw.leetcode.p1to10;
 
-public class LongestSubString
+public class LongestSubString3
 {
     public static int lengthOfLongestSubstring(String s)
     {

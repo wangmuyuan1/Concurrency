@@ -1,6 +1,6 @@
-package com.mw.leetcode;
+package com.mw.leetcode.p1to10;
 
-public class AddTwoNumbers
+public class AddTwoNumbers2
 {
     public static ListNode addTwoNumbers(ListNode l1, ListNode l2)
     {
