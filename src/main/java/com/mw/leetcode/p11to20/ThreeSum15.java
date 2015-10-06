@@ -6,44 +6,42 @@ import java.util.List;
 
 public class ThreeSum15
 {
-    public static List<List<Integer>> threeSum(int[] nums)
+    public static List<List<Integer>> threeSum(int[] num)
     {
-        List<List<Integer>> results = new ArrayList<>();
-        Arrays.sort(nums);
+        // Start typing your Java solution below
+        // DO NOT write main() function
+        List<List<Integer>> res = new ArrayList<>();
+        if(num.length<3) return res;
 
-        for (int i = 0; i < nums.length; i++)
-        {
-            for (int j = i + 1, k = nums.length - 1; j < k;)
-            {
-                if (nums[i] + nums[j] + nums[k] < 0)
-                {
-                    j++;
-                }
-                else if (nums[i] + nums[j] + nums[k] > 0)
-                {
-                    k--;
-                }
-                else
-                {
-                    boolean found = false;
-                    for (List<Integer> result : results)
-                    {
-                        if (result.get(0) == nums[i]
-                                && result.get(1) == nums[j]
-                                && result.get(2) == nums[k])
-                        {
-                            found = true;
-                            break;
-                        }
+        Arrays.sort(num);
+        for(int i=0;i<num.length-2;i++){
+            if(i==0 || num[i]>num[i-1]){ //avoid duplicate solutions
+                int j=i+1,
+                    k=num.length-1;
+
+                while(j<k){
+                    if(num[j]+num[k]==-num[i]){
+                        List<Integer> temp = new ArrayList<Integer>();
+                        temp.add(num[i]);
+                        temp.add(num[j]);
+                        temp.add(num[k]);
+                        res.add(temp);
+                        k--;
+                        j++;
+                        while(k>j && num[k]==num[k+1]) k--;//avoid duplicate solutions
+
+                        while(j<k && num[j]==num[j-1]) j++;//avoid duplicate solutions
+
+                    }else if(num[j]+num[k]>-num[i]){
+                        k--;
+                    }else{
+                        j++;
                     }
-                    if (!found)
-                        results.add(Arrays.asList(nums[i], nums[j], nums[k]));
-                    j++;
                 }
             }
         }
 
-        return results;
+        return res;
     }
 
     public static void main(String[] args)
