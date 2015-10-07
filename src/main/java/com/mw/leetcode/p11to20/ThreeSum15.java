@@ -11,17 +11,17 @@ public class ThreeSum15
         // Start typing your Java solution below
         // DO NOT write main() function
         List<List<Integer>> res = new ArrayList<>();
-        if(num.length<3) return res;
+        if(num.length < 3)
+            return res;
 
         Arrays.sort(num);
-        for(int i=0;i<num.length-2;i++){
-            if(i==0 || num[i]>num[i-1]){ //avoid duplicate solutions
-                int j=i+1,
-                    k=num.length-1;
+        for(int i=0; i<num.length-2;i++){
+            if(i==0 || num[i] > num[i-1]){ //avoid duplicate solutions
+                int j=i+1, k=num.length-1;
 
                 while(j<k){
                     if(num[j]+num[k]==-num[i]){
-                        List<Integer> temp = new ArrayList<Integer>();
+                        List<Integer> temp = new ArrayList<>();
                         temp.add(num[i]);
                         temp.add(num[j]);
                         temp.add(num[k]);
@@ -32,9 +32,9 @@ public class ThreeSum15
 
                         while(j<k && num[j]==num[j-1]) j++;//avoid duplicate solutions
 
-                    }else if(num[j]+num[k]>-num[i]){
+                    } else if(num[j]+num[k]>-num[i]){
                         k--;
-                    }else{
+                    } else {
                         j++;
                     }
                 }
