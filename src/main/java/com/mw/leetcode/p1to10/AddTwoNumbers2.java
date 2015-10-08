@@ -1,5 +1,7 @@
 package com.mw.leetcode.p1to10;
 
+import com.mw.leetcode.ListNode;
+
 public class AddTwoNumbers2
 {
     public static ListNode addTwoNumbers(ListNode l1, ListNode l2)
@@ -64,16 +66,5 @@ public class AddTwoNumbers2
             System.out.println(result.val);
             result = result.next;
         }
-    }
-}
-
-class ListNode
-{
-    int val;
-    ListNode next;
-
-    ListNode(int x)
-    {
-        val = x;
     }
 }
