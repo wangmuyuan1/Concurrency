@@ -1,12 +1,47 @@
 package com.mw.leetcode.p21top30;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 public class MergeKSortedList23
 {
+    public ListNode mergeKListsMininumHeap(ListNode[] lists)
+    {
+        List<ListNode> allList = new ArrayList<>();
+                Collections.addAll(allList, lists);
+
+        // Min Heap The heap will minimize the search time.
+        Queue<ListNode> heap = new PriorityQueue<>(10, new Comparator<ListNode>()
+        {
+            @Override
+            public int compare(ListNode n1, ListNode n2)
+            {
+                return n1.val-n2.val;
+            }
+        });
+
+        for (ListNode node : allList) // Insert all element into heap.
+        {
+            if (node != null)
+            {
+                heap.offer(node);
+            }
+        }
+
+        ListNode head = new ListNode(0);
+        ListNode dummy = head;
+        while (heap.size() > 0)
+        {
+            ListNode cur = heap.poll();
+            head.next = cur;
+            head = head.next;
+
+            // Put the next value from the picked list node into heap
+            if (cur.next!=null)
+                heap.offer(cur.next);
+        }
+        return dummy.next;
+    }
+
     public ListNode mergeKLists(ListNode[] lists)
     {
         if (lists.length == 0)
