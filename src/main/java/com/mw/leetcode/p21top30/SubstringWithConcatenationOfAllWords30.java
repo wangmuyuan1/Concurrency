@@ -41,6 +41,7 @@ public class SubstringWithConcatenationOfAllWords30
 
                     count++;
 
+                    // If not match, move one word forward.
                     while(currentMap.get(sub)>dictionary.get(sub)){
                         String left = s.substring(start, start+len);
                         currentMap.put(left, currentMap.get(left)-1);
@@ -49,7 +50,7 @@ public class SubstringWithConcatenationOfAllWords30
                         start = start + len;
                     }
 
-
+                    // If match, save and move one word forward.
                     if(count==words.length){
                         result.add(start); //add to result
 
