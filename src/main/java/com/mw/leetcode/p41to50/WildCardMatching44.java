@@ -20,12 +20,12 @@ public class WildCardMatching44
             {
                 star = j;
                 j++;
-                mark = i;
+                mark = i; // current i position
             }
-            else if (star != -1)
+            else if (star != -1) // if s.charAt(i) != p.charAt(j) and star is not -1
             {
                 j = star + 1; // always point the char after *. even it match once, it can still go back.
-                mark++;
+                mark++; // continues move forward.
                 i = mark;
             }
             else
