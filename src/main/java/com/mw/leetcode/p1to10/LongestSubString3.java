@@ -25,7 +25,7 @@ public class LongestSubString3
                 }
                 else
                 {
-                    value[array[i]] = 0;
+                    value[array[i]] = i + 1;
                     length++;
                 }
             }
