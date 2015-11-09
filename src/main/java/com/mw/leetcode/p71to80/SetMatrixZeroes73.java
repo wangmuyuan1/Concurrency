@@ -54,12 +54,6 @@ public class SetMatrixZeroes73
                 for (int i = 1; i < rownum; i++)
                     matrix[i][j] = 0;
 
-//        for (int i = 1; i < matrix.length; ++i) {
-//           for (int j = 1; j < matrix[0].length; ++j) {
-//               if (matrix[i][0] == 0 || matrix[0][j] == 0)  matrix[i][j] = 0;
-//            }
-//        }
-
         if (firstRowHasZero)
             for (int j = 0; j < colnum; j++)
                 matrix[0][j] = 0;
