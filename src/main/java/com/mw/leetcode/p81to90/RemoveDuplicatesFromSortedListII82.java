@@ -1,4 +1,4 @@
-package com.mw.leetcode.p82to83;
+package com.mw.leetcode.p81to90;
 
 import com.mw.leetcode.ListNode;
 
