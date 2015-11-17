@@ -2,8 +2,8 @@ package com.mw.leetcode.p90top100;
 
 import com.mw.leetcode.ListNode;
 
-import static com.mw.ListNodeUtil.generateList;
-import static com.mw.ListNodeUtil.print;
+import static com.mw.ProjectUtil.generateList;
+import static com.mw.ProjectUtil.print;
 
 public class ReverseLinkedListII92
 {

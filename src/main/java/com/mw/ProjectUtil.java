@@ -1,12 +1,37 @@
 package com.mw;
 
 import com.mw.leetcode.ListNode;
+import com.mw.leetcode.TreeNode;
 
-public class ListNodeUtil
+import java.util.ArrayDeque;
+import java.util.Deque;
+import java.util.List;
+
+public class ProjectUtil
 {
+    public static TreeNode generateTree(String s)
+    {
+        Deque<TreeNode> queue = new ArrayDeque<>();
+        if (s == null && s.equals(""))
+            return null;
+
+        return null;
+    }
+
+    public static void printList(List list)
+    {
+        for (int i = 0; i < list.size(); i++)
+        {
+            if (i < list.size() - 1)
+                System.out.print(list.get(i) + ",");
+            else
+                System.out.print(list.get(i));
+        }
+    }
+
     public static ListNode generateList(String s)
     {
-        if (s == "")
+        if (s == null && s.equals(""))
             return null;
 
         String[] vals = s.split("->");
