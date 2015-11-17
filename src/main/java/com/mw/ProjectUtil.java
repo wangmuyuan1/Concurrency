@@ -15,6 +15,18 @@ public class ProjectUtil
         if (s == null && s.equals(""))
             return null;
 
+        String[] array = s.split(",");
+
+        for (int i = 0; i < array.length; i++)
+        {
+            if (array[i] == null || array[i].equals("") || array[i].equals("#"))
+                continue;
+
+            queue.add(new TreeNode(Integer.valueOf(array[i])));
+
+
+        }
+
         return null;
     }
 
