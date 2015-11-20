@@ -16,7 +16,7 @@ public class ProjectUtil
         if (s == null && s.equals(""))
             return null;
 
-        String[] array = s.split(",");
+        String[] array = s.replaceAll("\\[","").replaceAll("\\]", "").split(",");
         if (array[0] == null || array[0].equals("") || array[0].equals("#") || array[0].equalsIgnoreCase("null"))
         {
             return null;
