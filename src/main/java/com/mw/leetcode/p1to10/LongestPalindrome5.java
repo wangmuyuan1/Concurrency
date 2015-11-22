@@ -4,47 +4,41 @@ public class LongestPalindrome5
 {
     public static String longestPalindrome(String s)
     {
-        char[] array = s.toCharArray();
-        // We init a matrix[j][i] where i is the starting of the index and j is the length.
-        boolean[][] matrix = new boolean[array.length][array.length];
+        if (s.length() <= 1)
+            return s;
 
-        // Every character itself is a palindrome.
-        for (int i = 0; i < array.length; i++)
+        // 这个矩阵保存了从i开始，extend到J，这个子串是否是palindrome.
+        boolean[][] dp = new boolean[s.length()][s.length()];
+
+        for (int i = 0; i < s.length(); i++)
         {
-            matrix[0][i] = true; // for every character, extend 0 step. we can find a palindrome.
+            dp[i][0] = true; // a char itself is palindrome.
         }
 
-        // Check if its neighbour is same as itself.
-        for (int i = 0; i < array.length - 1; i++)
+        for (int i = 0; i < s.length() - 1; i++)
         {
-            matrix[1][i] = (array[i] == array[i + 1]); // for every character except the last one, extend 1 step. we can find a palindrome.
+            dp[i][1] = (s.charAt(i) == s.charAt(i + 1));
         }
 
-        // Check how long we can extend.
-        for (int j = 2; j < array.length; j++)
+        for (int j = 2; j < s.length(); j++) //优先计算step
         {
-            for (int i = 0; i < array.length - j; i++)
+            for (int i = s.length() - j - 1; i >= 0; i--)
             {
-                // i and i + j means a step expanding from i + 1 to i + j - 1.
-                // eg. matrix[2][0] = (array[0] == array[2]) && matrix[0][1]
-                // eg. matrix[3][0] = (array[0] == array[3]) && matrix[1][1]
-                // eg. matrix[4][0] = (array[0] == array[4]) && matrix[2][1]
-                matrix[j][i] = (array[i] == array[i + j]) && matrix[j - 2][i + 1];
+                dp[i][j] = (s.charAt(i) == s.charAt(i + j)) && dp[i + 1][j - 2]; // here has to be j - 2, as both end.
             }
         }
 
         // Check the longest. because j
         int start = 0;
         int length = 0;
-        for (int j = 0; j < array.length; j++)
+        for (int j = 0; j < s.length(); j++)
         {
-            for (int i = 0; i < array.length; i++)
+            for (int i = 0; i < s.length() - j; i++)
             {
-                if (matrix[j][i])
+                if (dp[i][j] && j > length)
                 {
                     start = i;
                     length = j;
-                    break;
                 }
             }
         }
@@ -54,7 +48,7 @@ public class LongestPalindrome5
 
     public static void main(String[] args)
     {
-        System.out.println(longestPalindrome("acc"));
+        //System.out.println(longestPalindrome("acc"));
         System.out.println(longestPalindrome("cuyabbaydd"));
     }
 }
