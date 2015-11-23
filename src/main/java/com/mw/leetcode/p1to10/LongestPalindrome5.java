@@ -12,43 +12,35 @@ public class LongestPalindrome5
 
         for (int i = 0; i < s.length(); i++)
         {
-            dp[i][0] = true; // a char itself is palindrome.
-        }
-
-        for (int i = 0; i < s.length() - 1; i++)
-        {
-            dp[i][1] = (s.charAt(i) == s.charAt(i + 1));
-        }
-
-        for (int j = 2; j < s.length(); j++) //优先计算step
-        {
-            for (int i = s.length() - j - 1; i >= 0; i--)
+            for (int j = i; j >= 0; j--)
             {
-                dp[i][j] = (s.charAt(i) == s.charAt(i + j)) && dp[i + 1][j - 2]; // here has to be j - 2, as both end.
+                dp[j][i] = (s.charAt(i) == s.charAt(j)) && (i - j <= 1 || dp[j + 1][i - 1]);
             }
         }
 
         // Check the longest. because j
         int start = 0;
-        int length = 0;
-        for (int j = 0; j < s.length(); j++)
+        int end = 0;
+        int max = 0;
+        for (int i = 0; i < s.length(); i++)
         {
-            for (int i = 0; i < s.length() - j; i++)
+            for (int j = 0; j < s.length(); j++)
             {
-                if (dp[i][j] && j > length)
+                if (dp[i][j] && j - i > max)
                 {
                     start = i;
-                    length = j;
+                    end = j;
+                    max = j - i;
                 }
             }
         }
 
-        return s.substring(start, start + length + 1);
+        return s.substring(start, end + 1);
     }
 
     public static void main(String[] args)
     {
-        //System.out.println(longestPalindrome("acc"));
-        System.out.println(longestPalindrome("cuyabbaydd"));
+        System.out.println(longestPalindrome("acc"));
+//        System.out.println(longestPalindrome("cuyabbaydd"));
     }
 }
