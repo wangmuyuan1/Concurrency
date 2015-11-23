@@ -59,6 +59,55 @@ public class ProjectUtil
         return root;
     }
 
+    public static TreeLinkNode generateTreeLink(String s)
+    {
+        Queue<TreeLinkNode> queue = new LinkedList<>();
+        if (s == null && s.equals(""))
+            return null;
+
+        String[] array = s.replaceAll("\\[","").replaceAll("\\]", "").split(",");
+        if (array[0] == null || array[0].equals("") || array[0].equals("#") || array[0].equalsIgnoreCase("null"))
+        {
+            return null;
+        }
+        TreeLinkNode root = new TreeLinkNode(Integer.valueOf(array[0]));
+        queue.add(root);
+
+        for (int i = 1; i < array.length; i = i + 2)
+        {
+            TreeLinkNode node = queue.poll();
+            if (node == null)
+            {
+                throw new RuntimeException("Invalid Tree!");
+            }
+
+            if (array[i] != null && !array[i].equals("") && !array[i].equals("#") && !array[i].equalsIgnoreCase("null")) // left val valid
+            {
+                TreeLinkNode leftChild = new TreeLinkNode(Integer.valueOf(array[i]));
+                node.left = leftChild;
+                queue.add(leftChild);
+            }
+
+            if (i + 1 < array.length && array[i + 1] != null && !array[i + 1].equals("") && !array[i + 1].equals("#") && !array[i + 1].equalsIgnoreCase("null")) // right val valid.
+            {
+                TreeLinkNode rightChild = new TreeLinkNode(Integer.valueOf(array[i + 1]));
+                node.right = rightChild;
+                queue.add(rightChild);
+            }
+
+            if(
+                    (array[i] == null || array[i].equals("") || array[i].equals("#") || array[i].equalsIgnoreCase("null"))
+                && (array[i + 1] == null || array[i + 1].equals("") || array[i + 1].equals("#") || array[i + 1].equalsIgnoreCase("null"))
+                    )
+            {
+                node.left = null;
+                node.right = null;
+            }
+        }
+
+        return root;
+    }
+
     public static void printTree(TreeNode node)
     {
         Stack<TreeNode> globalStack = new Stack<>();
