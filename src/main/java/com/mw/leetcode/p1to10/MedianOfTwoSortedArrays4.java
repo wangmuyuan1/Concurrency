@@ -2,50 +2,57 @@ package com.mw.leetcode.p1to10;
 
 public class MedianOfTwoSortedArrays4
 {
-    public static double findMedianSortedArrays(int[] A, int[] B) {
-        int m = A.length;
-        int n = B.length;
+    public static double findMedianSortedArrays(int[] nums1, int[] nums2) {
+        int[] a;
+        int[] b;
 
-        if ((m + n) % 2 != 0) // if m + n is odd, then we need only return the kth where for this moment k = m + n / 2
-            return (double) findKth(A, B, (m + n) / 2, 0, m - 1, 0, n - 1);
-        else { // even case, then we return ((k - 1)th + kth) /2
-            return (findKth(A, B, (m + n) / 2, 0, m - 1, 0, n - 1) // k = m + n / 2
-                + findKth(A, B, (m + n) / 2 - 1, 0, m - 1, 0, n - 1)) * 0.5; // (k - 1)th
+        //较短的放前面.
+        if (nums1.length <= nums2.length)
+        {
+            a = nums1;
+            b = nums2;
         }
-    }
-
-    public static int findKth(int A[], int B[], int k,
-        int aStart, int aEnd, int bStart, int bEnd) {
-
-        int aLen = aEnd - aStart + 1;
-        int bLen = bEnd - bStart + 1;
-
-        // Handle special cases
-        if (aLen == 0)
-            return B[bStart + k];
-        if (bLen == 0)
-            return A[aStart + k];
-        if (k == 0)
-            return A[aStart] < B[bStart] ? A[aStart] : B[bStart]; // if k == 0 return the lesser from the two start.
-
-        int aMid = aLen * k / (aLen + bLen); // a's middle count. k / (aLen + bLen) can cal the kth element from the two array.
-        int bMid = k - aMid - 1; // b's middle count because k is cal from aLen + bLen, but k - aMid - 1 should be the index of bMid
-
-        // make aMid and bMid to be array index
-        aMid = aMid + aStart;
-        bMid = bMid + bStart;
-
-        if (A[aMid] > B[bMid]) {
-            k = k - (bMid - bStart + 1);
-            aEnd = aMid;
-            bStart = bMid + 1;
-        } else {
-            k = k - (aMid - aStart + 1);
-            bEnd = bMid;
-            aStart = aMid + 1;
+        else
+        {
+            a = nums2;
+            b = nums1;
         }
 
-        return findKth(A, B, k, aStart, aEnd, bStart, bEnd);
+        // 计算几个关键Index的初值. min, max, mid
+        int m = a.length;
+        int n = b.length;
+        int min = 0;
+        int max = m;
+        int mid = (m + n + 1) / 2; // make sure the left 至少和右边一样长。
+        int n1 = 0;
+        int n2 = 0;
+        int i = (min + max) / 2;
+        int j = mid - i;
+        while (min <= max) // 我们需要逐渐narrow区间。
+        {
+            i = (min + max) / 2;
+            j = mid - i;
+            if (i < m && j > 0 && a[i] < b[j - 1]) // 说明我们需要把a右移，b左移
+                min = i + 1;
+            else if (j < n && i > 0 && b[j] < a[i - 1]) // 说明我们需要把a左移，b右移
+                max = i - 1;
+            else // 我们找到了这个i值了
+            {
+                if (i == 0) n1 = b[j - 1];
+                else if (j == 0) n1 = a[i - 1];
+                else n1 = Math.max(a[i - 1], b[j - 1]);
+                break;
+            }
+        }
+
+        if ((m + n) % 2 == 1)
+            return n1;
+
+        if (i == m) n2 = b[j];
+        else if (j == n) n2 = a[i];
+        else n2 = Math.min(a[i], b[j]);
+
+        return ((double)n1 + (double)n2) / 2; // return double.
     }
 
     public static void main(String[] args)
