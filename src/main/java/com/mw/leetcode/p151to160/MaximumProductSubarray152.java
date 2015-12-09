@@ -1,6 +1,6 @@
 package com.mw.leetcode.p151to160;
 
-public class MaximumProductSubarray
+public class MaximumProductSubarray152
 {
     public int maxProduct(int[] nums)
     {
