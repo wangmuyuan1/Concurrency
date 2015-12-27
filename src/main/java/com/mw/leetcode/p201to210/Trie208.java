@@ -14,68 +14,40 @@ public class Trie208
     // Inserts a word into the trie.
     public void insert(String word)
     {
-        if (word != null && word.length() > 0)
+        TrieNode node = root;
+        for (char c : word.toCharArray())
         {
-            TrieNode cur = root;
-            for (int i = 0; i < word.length(); i++)
-            {
-                TrieNode child = cur.getChild(word.charAt(i));
-                if (child == null)
-                {
-                    child = new TrieNode(word.charAt(i));
-                    cur.addChild(child);
-                }
-                cur = child;
+            if (node.children[c - 'a'] == null) {
+                node.children[c - 'a'] = new TrieNode();
             }
-            cur.terminates = true;
+            node = node.children[c - 'a'];
         }
+        node.terminates = true;
     }
 
     // Returns if the word is in the trie.
     public boolean search(String word)
     {
-        if (root.children.isEmpty() && (word == null || word.length() == 0))
-            return true;
-        else
-        {
-            TrieNode node = getLastNode(word);
-            return node != null && node.terminates;
-        }
+        TrieNode node = getLastNode(word);
+        return node != null && node.terminates;
     }
 
     private TrieNode getLastNode(String word)
     {
-        if (word != null && word.length() > 0)
-        {
-            TrieNode cur = root;
-            for (int i = 0; i < word.length(); i++)
-            {
-                TrieNode child = cur.getChild(word.charAt(i));
-                if (child != null)
-                {
-                    cur = child;
-                }
-                else
-                {
-                    return null;
-                }
-            }
-            return cur;
+        TrieNode node = root;
+        for (char c : word.toCharArray()) {
+            if (node.children[c - 'a'] == null) return null;
+            node = node.children[c - 'a'];
         }
-        return null;
+        return node;
     }
 
     // Returns if there is any word in the trie
     // that starts with the given prefix.
     public boolean startsWith(String prefix)
     {
-        if (root.children.isEmpty() && (prefix == null || prefix.length() == 0))
-            return true;
-        else
-        {
-            TrieNode node = getLastNode(prefix);
-            return node != null;
-        }
+        TrieNode node = getLastNode(prefix);
+        return node != null;
     }
 
     public static void main(String[] args)

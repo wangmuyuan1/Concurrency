@@ -1,13 +1,10 @@
 package com.mw.leetcode;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class TrieNode
 {
     public Character val;
     public boolean terminates;
-    public List<TrieNode> children = new ArrayList<>();
+    public TrieNode[] children = new TrieNode[26]; // c - 'a' as index.
 
     public TrieNode()
     {
@@ -20,18 +17,11 @@ public class TrieNode
 
     public TrieNode getChild(char c)
     {
-        for (TrieNode node : children)
-        {
-            if (node.val == c)
-            {
-                return node;
-            }
-        }
-        return null;
+        return children[c - 'a'];
     }
 
     public void addChild(TrieNode trieNode)
     {
-        children.add(trieNode);
+        children[trieNode.val - 'a'] = trieNode;
     }
 }
