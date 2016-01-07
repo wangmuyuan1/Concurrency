@@ -20,7 +20,6 @@ public class BasicCalculator224
 
             if(c >= '0' && c <= '9') {
                 num = num * 10 + (c - '0');
-
             } else if(c == '+' || c == '-') {
                 result += sign * num;
                 sign = stack.peek() * (c == '+' ? 1: -1);
@@ -41,6 +40,6 @@ public class BasicCalculator224
     public static void main(String[] args)
     {
         //3-((5-6)-((7-8) + 2))
-        System.out.println(new BasicCalculator224().calculate("(1)"));
+        System.out.println(new BasicCalculator224().calculate("((-3-(1-4)))"));
     }
 }
