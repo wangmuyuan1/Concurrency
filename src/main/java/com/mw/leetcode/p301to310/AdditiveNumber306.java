@@ -1,4 +1,4 @@
-package com.mw.p301to310;
+package com.mw.leetcode.p301to310;
 
 public class AdditiveNumber306
 {
