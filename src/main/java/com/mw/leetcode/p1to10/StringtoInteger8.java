@@ -2,47 +2,39 @@ package com.mw.leetcode.p1to10;
 
 public class StringtoInteger8
 {
-    public static int myAtoi(String str)
+    public int myAtoi(String str)
     {
-        if (str == null || str.length() == 0)
-        {
-            return 0;
+        int index = 0, sign = 1, total = 0;
+        //1. Empty string
+        if(str.length() == 0) return 0;
+
+        //2. Remove Spaces
+        while(str.charAt(index) == ' ' && index < str.length())
+            index ++;
+
+        //3. Handle signs
+        if(str.charAt(index) == '+' || str.charAt(index) == '-'){
+            sign = str.charAt(index) == '+' ? 1 : -1;
+            index ++;
         }
 
-        str = str.trim();
+        //4. Convert number and avoid overflow
+        while(index < str.length()){
+            int digit = str.charAt(index) - '0';
+            if(digit < 0 || digit > 9) break;
 
-        double result = 0;
-        for (int i = (str.charAt(0) == '-' || str.charAt(0) == '+') ? 1 : 0; i < str.length(); i++)
-        {
-            if (result == 0 && str.charAt(i) == 48)
-                continue;
-            if (str.charAt(i) < 48 || str.charAt(i) > 57)
-            {
-                break;
-            }
+            //check if total will be overflow after 10 times and add digit
+            if(Integer.MAX_VALUE/10 < total || Integer.MAX_VALUE/10 == total && Integer.MAX_VALUE %10 < digit)
+                return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
 
-            result = result * 10 + (str.charAt(i) - 48);
+            total = 10 * total + digit;
+            index ++;
         }
-
-        if (str.charAt(0) == '-')
-        {
-            result = result * -1;
-        }
-
-        if (result > Integer.MAX_VALUE)
-        {
-            result = Integer.MAX_VALUE;
-        }
-
-        if (result < Integer.MIN_VALUE)
-        {
-            result = Integer.MIN_VALUE;
-        }
-        return (int) result;
+        return total * sign;
     }
 
     public static void main(String args[])
     {
-        System.out.println("13999999");
+        System.out.println(new StringtoInteger8().myAtoi("-9999999999999999"));
     }
 }
