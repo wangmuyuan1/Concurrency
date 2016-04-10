@@ -3,17 +3,19 @@ package com.mw.leetcode.p311top320;
 public class SuperUglyNumber313
 {
     public int nthSuperUglyNumber(int n,
-                                  int[] primes)
+                                      int[] primes)
     {
-        // similar approach.
-        int[] pointer = new int[primes.length];
         if (n == 1)
             return 1;
 
-        int[] dp = new int[n];
-        dp[0] = 1;
-        for (int i = 1; i < n; i++)
+        int[] pointer = new int[primes.length]; // stores the current pointer times for the given prime in the dp array
+        int[] dp = new int[n]; // store the 1 to nth number that consisted with primes.
+
+        dp[0] = 1; // the first item is prime.
+
+        for (int i = 1; i < n; i++) // Compute the 1 to nth number
         {
+            // dp[i] = min of factor of the number consists of prime
             //dp[i] = min of factor of all
             int min = Integer.MAX_VALUE;
             for (int j = 0; j < primes.length; j++)
@@ -28,6 +30,7 @@ public class SuperUglyNumber313
                     pointer[j]++;
             }
         }
+
         return dp[n - 1];
     }
 
