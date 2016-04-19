@@ -2,92 +2,46 @@ package com.mw.leetcode.p321top330;
 
 import com.mw.ProjectUtil;
 
-import java.util.LinkedList;
-import java.util.List;
-
 public class CreateMaximumNumber321
 {
     public int[] maxNumber(int[] nums1, int[] nums2, int k)
     {
-        int[] result = new int[k];
-        for (int i = 0; i < k; i++)
-        {
-            int[] temp = merge(max(nums1, i), max(nums2, k - i));
-            if (isGreater(temp, result))
-                result = temp;
+        int n = nums1.length;
+        int m = nums2.length;
+        int[] ans = new int[k];
+        for (int i = Math.max(0, k - m); i <= k && i <= n; ++i) {
+            int[] candidate = merge(maxArray(nums1, i), maxArray(nums2, k - i), k);
+            if (greater(candidate, 0, ans, 0)) ans = candidate;
         }
-        return result;
+        return ans;
     }
 
-    public boolean isGreater(int[] nums1, int[] nums2)
+    private int[] merge(int[] nums1, int[] nums2, int k)
     {
-        if (nums1.length < nums2.length)
-            return false;
-
-        if (nums1.length > 0 && nums2.length == 0)
-            return true;
-
-        for (int i = 0; i < nums2.length; i++)
-        {
-            if (nums1[i] > nums2[i])
-                return true;
-            if (nums1[i] < nums2[i])
-                return false;
-        }
-        return false;
+        int[] ans = new int[k];
+        for (int i = 0, j = 0, r = 0; r < k; ++r)
+            ans[r] = greater(nums1, i, nums2, j) ? nums1[i++] : nums2[j++];
+        return ans;
     }
 
-    public int[] merge(int[] nums1, int[] nums2)
+    public boolean greater(int[] nums1, int i, int[] nums2, int j)
     {
-        int[] result = new int[nums1.length + nums2.length];
-        int i = 0;
-        int j = 0;
-        int k = 0;
-        while (i < nums1.length && j < nums2.length)
-        {
-            if (nums1[i] >= nums2[j])
-                result[k++] = nums1[i++];
-            else
-                result[k++] = nums2[j++];
+        while (i < nums1.length && j < nums2.length && nums1[i] == nums2[j]) {
+            i++;
+            j++;
         }
-
-        while (i < nums1.length)
-            result[k++] = nums1[i++];
-        while (j < nums2.length)
-            result[k++] = nums2[j++];
-
-        return result;
+        return j == nums2.length || (i < nums1.length && nums1[i] > nums2[j]);
     }
 
-    public int[] max(int[] nums, int n)
+    public int[] maxArray(int[] nums, int k)
     {
-        List<Integer> result = new LinkedList<>();
-        for (int i = 0; i < nums.length; i++)
-        {
-            if (result.size() < n)
-                result.add(nums[i]);
-            else
-            {
-                // remove the one that less than the next.
-                int idx = -1;
-                for (int j = 0; j < result.size() - 1; j++)
-                    if (result.get(j) < result.get(j + 1))
-                        idx = j;
-
-                if (idx >= 0)
-                {
-                    result.remove(idx);
-                    result.add(nums[i]);
-                }
-                else if (!result.isEmpty() && nums[i] > result.get(result.size() - 1))
-                    result.set(result.size() - 1, nums[i]);
-            }
+        int n = nums.length;
+        int[] ans = new int[k];
+        for (int i = 0, j = 0; i < n; ++i) {
+            while (n - i + j > k && j > 0 && ans[j - 1] < nums[i]) j--;
+            if (j < k) ans[j++] = nums[i];
         }
-
-        int[] array = new int[result.size()];
-        for (int i = 0; i < result.size(); i++)
-            array[i] = result.get(i);
-        return array;
+        return ans;
     }
 
     public static void main(String[] args)
