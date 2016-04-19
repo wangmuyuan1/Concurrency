@@ -1,41 +1,56 @@
 package com.mw.leetcode.p241to250;
 
+import com.mw.ProjectUtil;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class DifferentWaystoAddParentheses241
 {
     // idea, recursive.
+
     public List<Integer> diffWaysToCompute(String input)
     {
-        List<Integer> result = new ArrayList<>();
+        List<Integer> results = new ArrayList<>();
         for (int i = 0; i < input.length(); i++)
         {
+            // compute the left and compute the right and then sum
             char c = input.charAt(i);
-            if (c == '+' || c == '-' || c == '*') // we divide.
+            if (c == '+' || c == '-' || c == '*')
             {
-                List<Integer> left = diffWaysToCompute(input.substring(0, i));
-                List<Integer> right = diffWaysToCompute(input.substring(i + 1, input.length()));
-                for (int m : left)
-                    for (int n : right)
+                List<Integer> leftResults =diffWaysToCompute(input.substring(0, i));
+                List<Integer> rightResults = diffWaysToCompute(input.substring(i + 1));
+
+                for (int m : leftResults)
+                {
+                    for (int n : rightResults)
                     {
                         switch (c)
                         {
                             case '+':
-                                result.add(m + n);
+                                results.add(m + n);
                                 break;
                             case '-':
-                                result.add(m - n);
+                                results.add(m - n);
                                 break;
                             case '*':
-                                result.add(m * n);
+                                results.add(m * n);
                                 break;
                         }
                     }
+                }
             }
         }
-        if (result.size() == 0)
-            result.add(Integer.valueOf(input));
-        return result;
+        if (results.size() == 0)
+            results.add(Integer.valueOf(input));
+        return results;
     }
+
+    public static void main(String[] args)
+    {
+        DifferentWaystoAddParentheses241 app = new DifferentWaystoAddParentheses241();
+        ProjectUtil.printList(app.diffWaysToCompute("2-1-1"));
+    }
+
+
 }
