@@ -3,6 +3,8 @@ package com.mw;
 import com.mw.leetcode.ListNode;
 import com.mw.leetcode.TreeNode;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
@@ -208,8 +210,21 @@ public class ProjectUtil
         return Math.max(maxDepth(root.left), maxDepth(root.right)) + 1;
     }
 
+    public static void printDate(String start, String end)
+    {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+        LocalDate startDate = LocalDate.parse(start, formatter);
+        LocalDate endDate = LocalDate.parse(end, formatter);
+
+        while (!startDate.isAfter(endDate))
+        {
+            System.out.println(startDate);
+            startDate = startDate.plusDays(1);
+        }
+    }
+
     public static void main(String[] args)
     {
-        printTree(generateTree("1,#,2,3"));
+        printDate("2015-10-18", "2016-04-13");
     }
 }
