@@ -5,42 +5,33 @@ public class LongestSubString3
     public static int lengthOfLongestSubstring(String s)
     {
         int[] value = new int[256];
-        char[] array = s.toCharArray();
-
         int start = 0;
-        int length = 0;
+        int cur = 0;
         int max = 0;
-        for (int i = 0; i < array.length; i++)
+        for (int i = 0; i < s.length(); i++)
         {
-            if (value[array[i]] > 0)
+            char c = s.charAt(i);
+            if (value[c] > 0)
             {
-                if (length > max)
+                max = Math.max(max, cur);
+                if (value[c] >= start)
                 {
-                    max = length;
-                }
-                if (value[array[i]] >= start)
-                {
-                    start = value[array[i]];
-                    length = i - value[array[i]] + 1;
+                    start = value[c];
+                    cur = i - value[c] + 1;
                 }
                 else
                 {
-                    value[array[i]] = i + 1;
-                    length++;
+                    value[c] = i + 1;
+                    cur++;
                 }
             }
             else
             {
-                length++;
+                cur++;
             }
-            value[array[i]] = i + 1;
+            value[c] = i + 1;
         }
-
-        if (max < length)
-        {
-            max = length;
-        }
-        return max;
+        return Math.max(max, cur);
     }
 
     public static void main(String[] args)
