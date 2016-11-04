@@ -12,7 +12,7 @@ public class CyclicBarrierTest
         {
             public void run()
             {
-                System.out.println("Runnable 1 executed.");
+                System.out.println("All Parties arrived. Barrier 1 released.");
             }
         };
 
@@ -20,18 +20,18 @@ public class CyclicBarrierTest
         {
             public void run()
             {
-                System.out.println("Runnable 2 executed.");
+                System.out.println("All Parties arrived. Runnable 2 executed.");
             }
         };
 
-        CyclicBarrier barrier1 = new CyclicBarrier(2, runnable1);
+        CyclicBarrier barrier1 = new CyclicBarrier(2, runnable1); // When two threads await on this barrier, then execute the runnable.
         CyclicBarrier barrier2 = new CyclicBarrier(2, runnable2);
 
-        CyclicBarrierRunnable barrierRunnable1 = new CyclicBarrierRunnable(barrier1, barrier2);
-        CyclicBarrierRunnable barrierRunnable2 = new CyclicBarrierRunnable(barrier1, barrier2);
+        CyclicBarrierRunnable workingThread1 = new CyclicBarrierRunnable(barrier1, barrier2);
+        CyclicBarrierRunnable workingThread2 = new CyclicBarrierRunnable(barrier1, barrier2);
 
-        new Thread(barrierRunnable1).start();
-        new Thread(barrierRunnable2).start();
+        new Thread(workingThread1).start();
+        new Thread(workingThread2).start();
     }
 
     static class CyclicBarrierRunnable implements Runnable
@@ -49,21 +49,19 @@ public class CyclicBarrierTest
         {
             try
             {
-                Thread.sleep(1000);
+                System.out.println(Thread.currentThread().getName() + " started running to barrier 1.");
+                Thread.sleep(5000);
                 System.out.println(Thread.currentThread().getName() + " waiting at barrier 1.");
                 barrier1.await();
 
-                Thread.sleep(1000);
+                System.out.println(Thread.currentThread().getName() + " started running to barrier 1.");
+                Thread.sleep(5000);
                 System.out.println(Thread.currentThread().getName() + " waiting at barrier 2.");
                 barrier2.await();
 
                 System.out.println(Thread.currentThread().getName() + " done.");
             }
-            catch (BrokenBarrierException e)
-            {
-                e.printStackTrace();  //TODO - remove
-            }
-            catch (InterruptedException e)
+            catch (BrokenBarrierException | InterruptedException e)
             {
                 e.printStackTrace();  //TODO - remove
             }
