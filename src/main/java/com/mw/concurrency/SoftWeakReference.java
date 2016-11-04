@@ -10,7 +10,7 @@ public class SoftWeakReference
 {
     public static void main(String[] args)
     {
-        SoftReference<Integer> soft = new SoftReference<>(1);
-        WeakReference<Integer> weak = new WeakReference<>(1);
+        SoftReference<Integer> soft = new SoftReference<>(1); // Get GC when Old Gen Full.
+        WeakReference<Integer> weak = new WeakReference<>(1); // Get GC after a unpredictable while.
     }
 }
