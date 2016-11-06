@@ -25,7 +25,7 @@ public class CountDownLatchTest
         {
             try
             {
-                this.latch.await();
+                this.latch.await(); // The other thread wait producer to finish.
                 System.out.println("Consumed all.");
             }
             catch (InterruptedException e)

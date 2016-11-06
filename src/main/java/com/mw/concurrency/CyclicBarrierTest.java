@@ -54,6 +54,13 @@ public class CyclicBarrierTest
                 System.out.println(Thread.currentThread().getName() + " waiting at barrier 1.");
                 barrier1.await();
 
+                barrier1.reset();
+
+                System.out.println(Thread.currentThread().getName() + " started running again to barrier 1.");
+                Thread.sleep(5000);
+                System.out.println(Thread.currentThread().getName() + " waiting again at barrier 1.");
+                barrier1.await();
+
                 System.out.println(Thread.currentThread().getName() + " started running to barrier 1.");
                 Thread.sleep(5000);
                 System.out.println(Thread.currentThread().getName() + " waiting at barrier 2.");
