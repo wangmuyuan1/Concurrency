@@ -55,6 +55,14 @@ public class ProducerConsumerLockCondition
                 {
                     lock.unlock();
                 }
+                try
+                {
+                    TimeUnit.SECONDS.sleep(1);
+                }
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -102,6 +110,14 @@ public class ProducerConsumerLockCondition
                 {
                     lock.unlock();
                 }
+                try
+                {
+                    TimeUnit.SECONDS.sleep(1);
+                }
+                catch (InterruptedException e)
+                {
+                    e.printStackTrace();
+                }
             }
         }
     }
@@ -109,18 +125,18 @@ public class ProducerConsumerLockCondition
     public static void main(String[] args)
     {
         List<String> productQueue = new ArrayList<>(100);
-        Lock lock = new ReentrantLock(true);
+        Lock lock = new ReentrantLock();
         Condition notFull = lock.newCondition();
         Condition notEmpty = lock.newCondition();
 
-        for (int i = 1; i <= 3; i++)
+        for (int i = 1; i <= 10; i++)
         {
-            new Thread(new Producer(i, productQueue, 10, lock, notFull, notEmpty)).start();
+            new Thread(new Producer(i, productQueue, 5, lock, notFull, notEmpty)).start();
         }
 
-        for (int i = 1; i <= 2; i++)
+        for (int i = 1; i <= 20; i++)
         {
-            new Thread(new Consumer(i, productQueue, 10, lock,  notFull, notEmpty)).start();
+            new Thread(new Consumer(i, productQueue, 5, lock,  notFull, notEmpty)).start();
         }
     }
 }
