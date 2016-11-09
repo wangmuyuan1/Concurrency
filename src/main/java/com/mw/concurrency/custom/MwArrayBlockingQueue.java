@@ -1,6 +1,7 @@
 package com.mw.concurrency.custom;
 
 import java.util.AbstractQueue;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
 import java.util.concurrent.BlockingQueue;
@@ -32,6 +33,7 @@ public class MwArrayBlockingQueue<E> extends AbstractQueue<E> implements Blockin
     // Need condition for not empty.
 
     @Override
+    // This requires custom iterator class.
     public Iterator<E> iterator()
     {
         return null;
@@ -217,5 +219,68 @@ public class MwArrayBlockingQueue<E> extends AbstractQueue<E> implements Blockin
         count--;
         notFull.signal();
         return e;
+    }
+
+    class Iter implements Iterator<E>
+    {
+        // last pointer.
+        E last;
+
+        // next pointer.
+        E next;
+
+        // current pointer.
+        E cur;
+
+        int counter;
+        int max;
+
+        Iter()
+        {
+            lock.lock();
+            try
+            {
+                if (count > 0)
+                {
+                    Object[] clone = Arrays.copyOf(items, items.length); // create copy.
+                    this.max = count; // Set counter.
+                    cur = (E) items[0]; // first
+                    counter = 1;
+                    if (max > 1)
+                    {
+                        next = (E) items[1]; // next;
+                        counter++;
+                    }
+                }
+            }
+            finally
+            {
+                lock.unlock();
+            }
+        }
+
+        @Override
+        public boolean hasNext()
+        {
+            if (next != null)
+                return true;
+            return false;
+        }
+
+        @Override
+        public E next()
+        {
+            if (counter == max)
+            {
+                next = null; // no more node.
+                return null;
+            }
+            else
+            {
+                cur = next;
+                next = (E) items[counter + 1];
+                return cur;
+            }
+        }
     }
 }
