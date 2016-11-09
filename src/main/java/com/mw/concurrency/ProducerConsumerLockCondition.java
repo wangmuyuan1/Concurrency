@@ -34,6 +34,7 @@ public class ProducerConsumerLockCondition
             while (true)
             {
                 lock.lock();
+                System.out.println("Producer " + id + " got lock.");
                 try
                 {
                     while (productQueue.size() == threshold)
@@ -53,6 +54,7 @@ public class ProducerConsumerLockCondition
                 }
                 finally
                 {
+                    System.out.println("Producer " + id + " released lock.");
                     lock.unlock();
                 }
                 try
@@ -93,6 +95,7 @@ public class ProducerConsumerLockCondition
                 lock.lock();
                 try
                 {
+                    System.out.println("Consumer " + id + " got lock.");
                     while (productQueue.isEmpty())
                     {
                         notEmpty.await();
@@ -108,6 +111,7 @@ public class ProducerConsumerLockCondition
                 }
                 finally
                 {
+                    System.out.println("Consumer " + id + " released lock.");
                     lock.unlock();
                 }
                 try
