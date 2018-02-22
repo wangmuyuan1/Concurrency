@@ -39,26 +39,26 @@ public class ImplementStrStr28
     {
         int[] next = new int[needle.length()];
         next[0] = -1;
-        int t = -1; // t means prefix index.
-        int i = 0; // i means postfix index.
+        int pre = -1; // t means prefix index.
+        int post = 0; // i means postfix index.
 
-        while (i < needle.length() - 1)
+        while (post < needle.length() - 1)
         {
-            if (t < 0
+            if (pre < 0
                     ||
-                    needle.charAt(i) == needle.charAt(t)// if p[i] == p[t] means the prefix and post fix matches.
+                    needle.charAt(post) == needle.charAt(pre)// if p[i] == p[t] means the prefix and post fix matches.
                     )
             {
                 // if t < 0 or prefix and post fix matches we increase the index in both prefix and postfix to next index.
-                i++;
-                t++;
+                pre++;
+                post++;
 
-                next[i] = (needle.charAt(i) != needle.charAt(t)) // if the prefix and post fix still matches. the next[i] = next[t] copy from the previous value. else mark next[i] with t,
-                        ? t : next[t];
+                next[post] = (needle.charAt(post) != needle.charAt(pre)) // if the prefix and post fix still matches. the next[i] = next[t] copy from the previous value. else mark next[i] with t,
+                        ? pre : next[pre];
             }
             else //the prefix and post fix doesnt match. we should move t back to the last value of the match, else to the begining of array.
             {
-                t = next[t];
+                pre = next[pre];
             }
         }
         return next;
