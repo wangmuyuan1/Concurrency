@@ -26,7 +26,7 @@ public class ImplementStrStr28
             }
             else
             {
-                j = next[j];
+                j = next[j]; // if the next j is -1, then we move both i and j (in next loop)
             }
         }
         if (j == pLen)
@@ -64,12 +64,90 @@ public class ImplementStrStr28
         return next;
     }
 
+    public static int strStrYT(String haystack, String needle)
+    {
+        if (needle.length() == 0)
+        {
+            return 0;
+        }
+        else if (haystack.length() == 0)
+        {
+            return -1;
+        }
+        int[] next = buildNextYT(needle);
+        int i = 0;
+        int j = 0;
+        while (i < haystack.length() && j < needle.length())
+        {
+            if (haystack.charAt(i) == needle.charAt(j))
+            {
+                i++;
+                j++;
+                if (j == needle.length())
+                {
+                    return i - j;
+                }
+            }
+            else
+            {
+                if (j > 0)
+                    j = next[j - 1];
+                else
+                {
+                    j = 0;
+                    while (i < haystack.length() && haystack.charAt(i) != needle.charAt(j))
+                        i++;
+                }
+            }
+        }
+
+        return -1;
+    }
+
+    public static int[] buildNextYT(String needle)
+    {
+        char[] array = needle.toCharArray();
+        int[] next = new int[needle.length()];
+
+        if (needle.length() <= 1) return next;
+        int i = 1;
+        int j = 0;
+
+        while (i < needle.length())
+        {
+            if (array[i] != array[j])
+            {
+                if (j > 0) j = next[j - 1];
+                else
+                {
+                    next[i] = 0;
+                    i++;
+                }
+            }
+            else
+            {
+                next[i] = j + 1;
+                i++;
+                j++;
+            }
+        }
+        return next;
+    }
+
     public static void main(String[] args)
     {
-        int[] next = buildNext("abcdabd");
-        for (int i : next)
-        {
-            System.out.println(i);
-        }
+//        int[] next = buildNextYT("abcdabca");
+//        Arrays.stream(next).forEach(System.out::print);
+//        System.out.println();
+//        next = buildNextYT("aabaabaaa");
+//        Arrays.stream(next).forEach(System.out::print);
+//        System.out.println();
+//
+//        next = buildNextYT("abcaby");
+//        Arrays.stream(next).forEach(System.out::print);
+//        System.out.println();
+
+
+        System.out.println(strStrYT("aabaaabaaac", "aabaaac"));
     }
 }
