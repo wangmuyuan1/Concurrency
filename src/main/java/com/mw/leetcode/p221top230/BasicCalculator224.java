@@ -6,33 +6,52 @@ public class BasicCalculator224
 {
     public int calculate(String s)
     {
-        if(s == null) return 0;
-
-        int result = 0;
-        int sign = 1;
-        int num = 0;
+        if (s.length() == 0)
+            return 0;
 
         Stack<Integer> stack = new Stack<>();
-        stack.push(sign);
+        Stack<Integer> resStack = new Stack<>();
 
-        for(int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
+        int res = 0;
+        int sign = 1;
+        int num = 0;
+        s = "(" + s + ")";
 
-            if(c >= '0' && c <= '9') {
-                num = num * 10 + (c - '0');
-            } else if(c == '+' || c == '-') {
-                result += sign * num;
-                sign = stack.peek() * (c == '+' ? 1: -1);
-                num = 0;
-            } else if(c == '(') {
-                stack.push(sign);
-            } else if(c == ')') {
-                stack.pop();
+        for (char c : s.toCharArray())
+        {
+            switch (c)
+            {
+                case '+':
+                    res += sign * num;
+                    sign = 1;
+                    num = 0;
+                    break;
+                case '-':
+                    res += sign * num;
+                    sign = -1;
+                    num = 0;
+                    break;
+                case '(':
+                    stack.push(sign);
+                    resStack.push(res);
+                    res = 0;
+                    sign = 1;
+                    num = 0;
+                    break;
+                case ')':
+                    res += sign * num; // cur
+                    sign = stack.pop();
+                    res = resStack.pop() + sign * res;
+                    num = 0;
+                    break;
+                case ' ':
+                    continue;
+                default:
+                    num = num * 10 + (c - '0');
             }
         }
 
-        result += sign * num;
-        return result;
+        return res;
     }
 
 
@@ -40,6 +59,6 @@ public class BasicCalculator224
     public static void main(String[] args)
     {
         //3-((5-6)-((7-8) + 2))
-        System.out.println(new BasicCalculator224().calculate("((-3-(1-4)))"));
+        System.out.println(new BasicCalculator224().calculate("(4+5+2)"));
     }
 }
